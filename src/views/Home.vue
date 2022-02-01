@@ -1,0 +1,94 @@
+<template>
+  <div class="home">
+    <div class="display-container">
+      <div class="sidebar-container">
+        <Sidebar />
+      </div>
+      <div class="routing-container">
+        <ul>
+          <li
+            v-for="x in getAllProducts"
+            :key="x.id"
+            @click="redirectToProductPage(x.id)"
+          >
+            <div class="image-container">
+              <img :src="x.image" />
+            </div>
+            <p>{{ x.title }}</p>
+            <p>{{ x.price }}</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import ServerRequests from "../Mixins/ServerRequests";
+import Sidebar from "../components/Sidebar";
+
+export default {
+  name: "Home",
+  data() {
+    return {
+      // products: [],
+    };
+  },
+  mixins: [ServerRequests],
+  components: { Sidebar },
+  methods: {
+    redirectToProductPage: function (id) {
+      this.$router.push({ name: "ProductDetails", params: { id } });
+    },
+  },
+  created() {
+    this.callAllProducts();
+  },
+  computed: {
+    getAllProducts() {
+      return this.$store.state.products;
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.routing-container {
+  width: 100%;
+}
+.display-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  .sidebar-container {
+    min-width: 200px;
+  }
+}
+ul {
+  display: grid;
+  list-style-type: none;
+  padding-left: 0px;
+  grid-template-columns: repeat(auto-fit, 25%);
+}
+
+ul li {
+  border: 1px solid #d8d8d8;
+  margin: 10px;
+  border-radius: 5px;
+  box-shadow: 3px 7px 25px #d8d8d8;
+}
+
+ul li:hover {
+  cursor: pointer;
+}
+
+ul li .image-container {
+  padding: 10px 20px;
+}
+
+ul li .image-container img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+}
+</style>
