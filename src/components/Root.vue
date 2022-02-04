@@ -7,9 +7,12 @@
       <div class="search-field">
         <input type="text" placeholder="Search Products" />
       </div>
-      <div>
-        <router-link to="/login">Login</router-link>|
-        <router-link to="/cart">{{ totalNumberItems }} Cart</router-link>
+      <div class="header-links">
+        <router-link to="/login">Login</router-link>&nbsp;|&nbsp;
+        <router-link to="/cart"
+          ><span v-if="totalNumberItems > 0">{{ totalNumberItems }}</span>
+          Cart</router-link
+        >
       </div>
     </div>
   </div>
@@ -48,12 +51,30 @@ export default {
 .nav-container {
   display: flex;
   justify-content: space-between;
-  padding: 5px;
+  padding: 5px 20px;
   background-color: #a90229;
+  height: 40px;
+  .search-field,
+  .store-name {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .header-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    a {
+      color: #fff;
+      font-size: 14px;
+      font-weight: 400;
+      text-decoration: none;
+    }
+  }
 }
 h2 {
   margin: 0px;
-  font-family: sans-serif;
   color: #9f9f9f;
   text-shadow: 2px 7px 5px rgba(0, 0, 0, 0.3),
     0px -4px 10px rgba(255, 255, 255, 0.3);

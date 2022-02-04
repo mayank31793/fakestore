@@ -25,7 +25,6 @@ export default createStore({
   },
   actions: {
     addProductInCart:function(context,payload){
-      console.log('reaching here',payload);
       context.commit('ADD_PRODUCT',payload);
     },
     deleteItem:function(context,payload){

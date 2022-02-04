@@ -14,8 +14,10 @@
             <div class="image-container">
               <img :src="x.image" />
             </div>
-            <p>{{ x.title }}</p>
-            <p>{{ x.price }}</p>
+            <p class="product-name">{{ x.title }}</p>
+            <p>
+              <b><span>$ </span>{{ x.price }}</b>
+            </p>
           </li>
         </ul>
       </div>
@@ -55,6 +57,20 @@ export default {
 <style lang="scss" scoped>
 .routing-container {
   width: 100%;
+  li {
+    padding: 5px 10px;
+  }
+  .product-name {
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .image-container img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+  }
 }
 .display-container {
   max-width: 1200px;
@@ -62,6 +78,9 @@ export default {
   display: flex;
   .sidebar-container {
     min-width: 200px;
+    height: calc(100vh - 40px);
+    position: sticky;
+    top: 50px;
   }
 }
 ul {
@@ -80,15 +99,5 @@ ul li {
 
 ul li:hover {
   cursor: pointer;
-}
-
-ul li .image-container {
-  padding: 10px 20px;
-}
-
-ul li .image-container img {
-  width: 100%;
-  height: 200px;
-  object-fit: contain;
 }
 </style>

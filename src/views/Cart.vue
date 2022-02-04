@@ -1,41 +1,54 @@
 <template>
   <div class="cart-container">
-    <div>
-      <ul>
-        <li v-for="x in itemsInCart" :key="x.id">
-          <div class="cart-item">
-            <div class="image-container">
-              <img :src="x.image" />
-            </div>
-            <div class="details-container">
-              <p @click="redirectToProductPage(x.id)">
-                <span>Title: </span>{{ x.title }}
-              </p>
-              <p><span>Price: </span>{{ x.price }}</p>
-              <p><span>Quantity: </span>{{ x.quantity }}</p>
-              <p>
-                <span>Rating: </span>{{ x.rating.rate }} / ({{
-                  x.rating.count
-                }})
-              </p>
-            </div>
-          </div>
-          <span class="delete-item" @click="deleteItem(x.id)">&times;</span>
-        </li>
-      </ul>
+    <div v-if="itemsInCart.length == 0" class="empty-container">
+      <h3>
+        No item in cart
+        <span @click="redirectToHome" class="shop-now">Shop Now</span>
+      </h3>
+      <div class="empty-cart">
+        <img :src="newImg" />
+      </div>
     </div>
-    <div class="proceed-checkout">
-      <p>Proceed To Checkout</p>
-      <button @click="redirectToCheckout">Proceed to Checkout</button>
+    <div class="inner-container" v-else>
+      <div>
+        <ul>
+          <li v-for="x in itemsInCart" :key="x.id">
+            <div class="cart-item">
+              <div class="image-container">
+                <img :src="x.image" />
+              </div>
+              <div class="details-container">
+                <p @click="redirectToProductPage(x.id)">
+                  <span>Title: </span>{{ x.title }}
+                </p>
+                <p><span>Price: </span>{{ x.price }}</p>
+                <p><span>Quantity: </span>{{ x.quantity }}</p>
+                <p>
+                  <span>Rating: </span>{{ x.rating.rate }} / ({{
+                    x.rating.count
+                  }})
+                </p>
+              </div>
+            </div>
+            <span class="delete-item" @click="deleteItem(x.id)">&times;</span>
+          </li>
+        </ul>
+      </div>
+      <div class="proceed-checkout">
+        <p>Proceed To Checkout</p>
+        <button @click="redirectToCheckout">Proceed to Checkout</button>
+      </div>
     </div>
   </div>
 </template>
 <script>
+import emptyCart from "../assets/empty-cart.svg";
 export default {
   name: "Cart",
   data() {
     return {
       // itemsInCart: [],
+      newImg: emptyCart,
     };
   },
   methods: {
@@ -48,6 +61,9 @@ export default {
     redirectToCheckout: function () {
       this.$router.push({ name: "Checkout" });
     },
+    redirectToHome: function () {
+      this.$router.push({ name: "Home" });
+    },
   },
   computed: {
     itemsInCart: function () {
@@ -57,27 +73,42 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .cart-container {
-  display: flex;
-  justify-content: space-between;
   max-width: 1000px;
   margin: 0 auto;
+  margin-top: 20px;
+  .inner-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-column-gap: 20px;
+  }
+  .empty-container {
+    h3 {
+      text-align: center;
+    }
+    img {
+      margin: 0 auto;
+    }
+  }
+  .empty-cart {
+    text-align: center;
+  }
 }
 ul {
   list-style-type: none;
-  max-width: 700px;
+  padding-left: 0px;
   margin-top: 0px;
-}
-ul li {
-  margin-bottom: 10px;
-  box-shadow: 3px 10px 25px #efefef;
-  border: 1px solid #efefef;
-  padding: 3px;
-  position: relative;
-}
-ul li p {
-  margin: 0px;
+  li {
+    margin-bottom: 10px;
+    box-shadow: 3px 10px 25px #efefef;
+    border: 1px solid #efefef;
+    padding: 3px;
+    position: relative;
+    p {
+      margin: 0px;
+    }
+  }
 }
 .cart-item {
   display: flex;
@@ -85,11 +116,11 @@ ul li p {
 .image-container {
   width: 100px;
   height: 100px;
-}
-.image-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 }
 .details-container {
   padding-left: 15px;
@@ -103,13 +134,12 @@ ul li p {
 }
 .details-container p {
   font-size: 14px;
-  font-family: sans-serif;
-}
-.details-container p span {
-  font-weight: 600;
-  color: #727272;
-  display: inline-block;
-  width: 70px;
+  span {
+    font-weight: 600;
+    color: #727272;
+    display: inline-block;
+    width: 70px;
+  }
 }
 .delete-item {
   position: absolute;
@@ -117,15 +147,21 @@ ul li p {
   right: 10px;
   font-weight: bold;
   font-size: 20px;
-}
-.delete-item:hover {
-  cursor: pointer;
-  color: #ff7e7e;
+  &:hover {
+    cursor: pointer;
+    color: #ff7e7e;
+  }
 }
 .proceed-checkout {
   border-radius: 4px;
   border: 1px solid #efefef;
   box-shadow: 3px 10px 24px #efefef;
   padding: 10px 20px;
+}
+.shop-now {
+  color: #5651f4;
+  &:hover {
+    cursor: pointer;
+  }
 }
 </style>

@@ -72,8 +72,25 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.sidebar-container {
+  input {
+    display: none;
+  }
+  label {
+    color: #000;
+    font-weight: bold;
+    &:hover {
+      cursor: pointer;
+      color: #000;
+    }
+  }
+  input:checked + label {
+    color: #a90229;
+  }
+}
 .category {
   display: flex;
+  margin: 5px 0px;
 }
 </style>

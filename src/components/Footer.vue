@@ -16,7 +16,6 @@
   p {
     margin: 0px;
     font-weight: 400;
-    font-family: sans-serif;
     font-size: 12px;
     text-align: center;
   }
