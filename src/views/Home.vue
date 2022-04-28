@@ -5,7 +5,7 @@
         <Sidebar />
       </div>
       <div class="routing-container">
-        <ul>
+        <ul v-if="getAllProducts.length > 0">
           <li
             v-for="x in getAllProducts"
             :key="x.id"
@@ -20,6 +20,9 @@
             </p>
           </li>
         </ul>
+        <div v-else>
+          <Loader />
+        </div>
       </div>
     </div>
   </div>
@@ -28,6 +31,7 @@
 <script>
 import ServerRequests from "../Mixins/ServerRequests";
 import Sidebar from "../components/Sidebar";
+import Loader from "../components/loader";
 
 export default {
   name: "Home",
@@ -37,7 +41,7 @@ export default {
     };
   },
   mixins: [ServerRequests],
-  components: { Sidebar },
+  components: { Sidebar, Loader },
   methods: {
     redirectToProductPage: function (id) {
       this.$router.push({ name: "ProductDetails", params: { id } });

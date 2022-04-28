@@ -19,7 +19,7 @@
         id="men-clothing"
         @change="getCategory('men\'s clothing')"
       />
-      <label for="men-clothing"> Men's Clothings </label>
+      <label for="men-clothing"> Men's Clothing </label>
     </div>
     <div class="category">
       <input
