@@ -1,5 +1,5 @@
 <template>
-  <div v-if="productDetails != null">
+  <div v-if="productDetails != null" :key="$route.path">
     <div class="product-details-container">
       <div class="image-container">
         <img :src="productDetails.image" />
@@ -28,13 +28,20 @@
       </div>
     </div>
   </div>
+  <div v-else>
+    <Loader />
+  </div>
 </template>
 
 <script>
 import axios from "axios";
+import Loader from "../components/loader";
 
 export default {
   name: "ProductDetails",
+  components: {
+    Loader,
+  },
   data() {
     return {
       productDetails: null,
@@ -58,7 +65,7 @@ export default {
       });
     },
   },
-  created() {
+  mounted() {
     axios
       .get("https://fakestoreapi.com/products/" + this.$route.params.id)
       .then((res) => (this.productDetails = res.data))

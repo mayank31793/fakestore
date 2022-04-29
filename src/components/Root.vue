@@ -5,7 +5,22 @@
         <router-link to="/"><h2>FakeStore</h2></router-link>
       </div>
       <div class="search-field">
-        <input type="text" placeholder="Search Products" />
+        <input
+          type="text"
+          placeholder="Search Products"
+          @keyup="productsTitleFunction"
+          v-model="titleText"
+        />
+        <ul v-if="productsTitle.length > 0" class="title-list">
+          <li
+            v-for="(x, index) in productsTitle"
+            :key="index"
+            @click="redirectToProductPage(x.id)"
+          >
+            <div class="title-image"><img :src="x.img" /></div>
+            <div class="title-text">{{ x.title }}</div>
+          </li>
+        </ul>
       </div>
       <div class="header-links">
         <router-link to="/login">Login</router-link>&nbsp;|&nbsp;
@@ -17,7 +32,7 @@
     </div>
   </div>
 
-  <router-view />
+  <router-view :key="$route.fullPath" />
 
   <Footer />
 </template>
@@ -30,7 +45,27 @@ export default {
   data() {
     return {
       cartItemNumber: 0,
+      productsTitle: [],
+      titleText: null,
     };
+  },
+  methods: {
+    async productsTitleFunction(e) {
+      this.productsTitle = await this.$store.state.products
+        .map((res) => ({
+          title: res.title,
+          img: res.image,
+          id: res.id,
+        }))
+        .filter((response) =>
+          response.title.toLowerCase().includes(e.target.value.toLowerCase())
+        );
+    },
+    redirectToProductPage: function (id) {
+      this.$router.push({ name: "ProductDetails", params: { id } });
+      this.productsTitle = [];
+      this.titleText = null;
+    },
   },
   computed: {
     totalNumberItems() {
@@ -73,6 +108,45 @@ export default {
     }
   }
 }
+.title-list {
+  position: absolute;
+  top: 21px;
+  width: 312px;
+  height: 200px;
+  overflow-y: scroll;
+  padding-left: 0px;
+  scrollbar-width: none;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 3px 5px 20px #7d7d7d;
+  li {
+    padding: 5px 0px;
+    border-bottom: 1px solid #000;
+    padding-left: 8px;
+    font-size: 14px;
+    display: flex;
+    &:hover {
+      cursor: pointer;
+    }
+    .title-image {
+      min-width: 30px;
+      max-width: 30px;
+      height: 30px;
+      margin-right: 5px;
+      img {
+        object-fit: contain;
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .title-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
 h2 {
   margin: 0px;
   color: #9f9f9f;

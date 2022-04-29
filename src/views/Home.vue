@@ -37,7 +37,7 @@ export default {
   name: "Home",
   data() {
     return {
-      // products: [],
+      productsTitles: [],
     };
   },
   mixins: [ServerRequests],
@@ -52,6 +52,7 @@ export default {
   },
   computed: {
     getAllProducts() {
+      this.productsTitles = this.$store.state.products.map((res) => res.title);
       return this.$store.state.products;
     },
   },
