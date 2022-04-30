@@ -10,7 +10,7 @@
           placeholder="Search Products"
           @keyup="productsTitleFunction"
           v-model="titleText"
-        />
+        /><span class="cancel-search" @click="cancelSearch">&times;</span>
         <ul v-if="productsTitle.length > 0" class="title-list">
           <li
             v-for="(x, index) in productsTitle"
@@ -82,6 +82,10 @@ export default {
           response.title.toLowerCase().includes(e.target.value.toLowerCase())
         );
     },
+    cancelSearch: function () {
+      this.productsTitle = [];
+      this.titleText = null;
+    },
     redirectToProductPage: function (id) {
       this.$router.push({ name: "ProductDetails", params: { id } });
       this.productsTitle = [];
@@ -107,7 +111,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #nav {
   position: sticky;
   top: 0px;
@@ -174,9 +178,18 @@ export default {
     cursor: pointer;
   }
 }
+.cancel-search {
+  position: relative;
+  right: 15px;
+  color: #7d7d7d;
+  font-weight: bold;
+  &:hover {
+    cursor: pointer;
+  }
+}
 .title-list {
   position: absolute;
-  top: 21px;
+  top: 27px;
   width: 312px;
   height: 200px;
   overflow-y: scroll;
