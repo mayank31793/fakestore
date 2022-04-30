@@ -35,8 +35,10 @@
         </ul>
       </div>
       <div class="proceed-checkout">
-        <p>Proceed To Checkout</p>
-        <button @click="redirectToCheckout">Proceed to Checkout</button>
+        <p>Subtotal ({{ totalNumberItems + " items" }}): $ {{ totalCost }}</p>
+        <button @click="redirectToCheckout" class="checkoutProceed">
+          Proceed to Checkout
+        </button>
       </div>
     </div>
   </div>
@@ -69,6 +71,18 @@ export default {
     itemsInCart: function () {
       return this.$store.state.productListInCart;
     },
+    totalNumberItems() {
+      return this.$store.state.productListInCart.reduce(
+        (a, b) => a + b.quantity,
+        0
+      );
+    },
+    totalCost: function () {
+      return this.$store.state.productListInCart.reduce(
+        (a, b) => a + b.price * b.quantity,
+        0
+      );
+    },
   },
 };
 </script>
@@ -80,7 +94,7 @@ export default {
   margin-top: 20px;
   .inner-container {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto 300px;
     grid-column-gap: 20px;
   }
   .empty-container {
@@ -112,6 +126,20 @@ ul {
 }
 .cart-item {
   display: flex;
+}
+.checkoutProceed {
+  width: 80%;
+  background-color: #ca0b0b;
+  color: #dfdfdf;
+  border: none;
+  border-radius: 4px;
+  padding: 7px 14px;
+  left: 50%;
+  position: relative;
+  transform: translateX(-50%);
+  &:hover {
+    cursor: pointer;
+  }
 }
 .image-container {
   width: 100px;
@@ -157,6 +185,7 @@ ul {
   border: 1px solid #efefef;
   box-shadow: 3px 10px 24px #efefef;
   padding: 10px 20px;
+  height: 100px;
 }
 .shop-now {
   color: #5651f4;
