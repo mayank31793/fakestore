@@ -7,6 +7,7 @@ import  store  from "../store";
 
 function requireAuth(to, from, next) {
   // redirect from 'files' page to 'home' if reloading page
+  console.log('to name', from.name);
   if (
     store.state.userEmail == null
   )

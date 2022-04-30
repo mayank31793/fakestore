@@ -23,10 +23,30 @@
         </ul>
       </div>
       <div class="header-links">
-        <router-link to="/login">Login</router-link>&nbsp;|&nbsp;
-        <router-link to="/cart"
-          ><span v-if="totalNumberItems > 0">{{ totalNumberItems }}</span>
-          Cart</router-link
+        <button
+          @click="loggingOutUser"
+          class="logout-button-container"
+          v-if="isLogoutButtonVisible"
+        >
+          Logout
+        </button>
+        <div
+          class="user-login"
+          v-if="$store.getters.userEmail != null"
+          @click="showLogoutUserButton"
+        >
+          {{ "Welcome \n" + $store.getters.userEmail }}
+        </div>
+        &nbsp;
+        <router-link to="/login" v-else>{{
+          $store.getters.userEmail != null
+            ? "Welcome " + $store.getters.userEmail
+            : "Login"
+        }}</router-link
+        >&nbsp;|&nbsp;
+        <router-link to="/cart" class="cart-items"
+          ><span v-if="totalNumberItems > 0">{{ totalNumberItems + " " }}</span>
+          &nbsp;Cart</router-link
         >
       </div>
     </div>
@@ -47,6 +67,7 @@ export default {
       cartItemNumber: 0,
       productsTitle: [],
       titleText: null,
+      isLogoutButtonVisible: false,
     };
   },
   methods: {
@@ -65,6 +86,14 @@ export default {
       this.$router.push({ name: "ProductDetails", params: { id } });
       this.productsTitle = [];
       this.titleText = null;
+    },
+    loggingOutUser: function () {
+      this.$store.dispatch("logout");
+      this.isLogoutButtonVisible = !this.isLogoutButtonVisible;
+      this.$router.push("/");
+    },
+    showLogoutUserButton: function () {
+      this.isLogoutButtonVisible = !this.isLogoutButtonVisible;
     },
   },
   computed: {
@@ -100,12 +129,49 @@ export default {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    position: relative;
     a {
-      color: #fff;
+      color: #c7c7c7;
       font-size: 14px;
       font-weight: 400;
       text-decoration: none;
+      background-color: #c35151;
+      padding: 4px 9px;
+      border-radius: 4px;
     }
+  }
+}
+.user-login {
+  &:hover {
+    cursor: pointer;
+  }
+}
+.user-login,
+.cart-items {
+  text-align: center;
+  background-color: #c35151;
+  padding: 4px 9px;
+  font-size: 13px;
+  line-height: 14px;
+  border-radius: 4px;
+  color: #c7c7c7;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+.logout-button-container {
+  position: absolute;
+  top: 37px;
+  left: 50px;
+  background-color: #b80d0d;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  box-shadow: 1px 5px 20px #969696;
+  &:hover {
+    cursor: pointer;
   }
 }
 .title-list {
@@ -159,7 +225,7 @@ h2 {
 .search-field {
   input {
     width: 300px;
-    height: 25px;
+    height: 33px;
     background-color: #e4e4e4;
     border: none;
     border-radius: 4px;

@@ -42,7 +42,7 @@ export default {
   methods: {
     loginFormSubmit: function () {
       this.$store.dispatch("login", this.loginFormData);
-      this.$router.push({ name: "Checkout" });
+      this.$router.go(-1);
     },
   },
 };

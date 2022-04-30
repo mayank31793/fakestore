@@ -6,6 +6,9 @@ export default createStore({
     userEmail: null,
     products:[],
   },
+  getters:{
+    userEmail: (state) => state.userEmail,
+  },
   mutations: {
     ADD_PRODUCT(state,data)  {
         state.productListInCart = [...state.productListInCart,JSON.parse(JSON.stringify(data))];
@@ -14,7 +17,10 @@ export default createStore({
       state.productListInCart = JSON.parse(JSON.stringify(state.productListInCart)).filter((res) => res.id != data)
     },
     LOGIN(state,data){  
-      state.userEmail = data.userEmail
+      state.userEmail = data.userEmail.substring(0, data.userEmail.indexOf("@"));
+    },
+    LOGOUT(state){  
+      state.userEmail = null;
     },
     CALL_ALL_PRODUCTS_OF_CATEGORY(state,data){
       state.products = JSON.parse(JSON.stringify(data));
@@ -32,6 +38,9 @@ export default createStore({
     },
     login:function(context,payload){
       context.commit('LOGIN',payload);
+    },
+    logout:function(context){
+      context.commit('LOGOUT');
     },
     callAllProductsOfCategory:function(context,payload){
       context.commit('CALL_ALL_PRODUCTS_OF_CATEGORY',payload);
