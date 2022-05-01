@@ -1,6 +1,6 @@
 <template>
   <div class="footer-container">
-    <p>All copyrights rights reserved ©, 2022</p>
+    <p>All copyrights rights reserved ©, 2022 - by Mayank Pant</p>
   </div>
 </template>
 
