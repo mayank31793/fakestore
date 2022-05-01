@@ -52,6 +52,8 @@
     </div>
   </div>
 
+  <Popup v-if="$store.getters.showPopUp" />
+
   <router-view :key="$route.fullPath" />
 
   <Footer />
@@ -60,8 +62,10 @@
 <script>
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
+import Popup from "./popup";
+
 export default {
-  components: { Footer, Sidebar },
+  components: { Footer, Sidebar, Popup },
   data() {
     return {
       cartItemNumber: 0,
@@ -115,6 +119,7 @@ export default {
 #nav {
   position: sticky;
   top: 0px;
+  z-index: 2;
 }
 .nav-container {
   display: flex;

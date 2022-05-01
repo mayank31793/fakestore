@@ -86,6 +86,7 @@ export default {
     height: calc(100vh - 40px);
     position: sticky;
     top: 50px;
+    margin-top: 13px;
   }
 }
 ul {

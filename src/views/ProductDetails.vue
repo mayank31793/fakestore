@@ -8,7 +8,7 @@
         <p>
           <span class="heading">Category: </span>{{ productDetails.category }}
         </p>
-        <p>
+        <p class="description">
           <span class="heading">Description: </span
           >{{ productDetails.description }}
         </p>
@@ -82,8 +82,9 @@ export default {
   margin: 0 auto;
 }
 .image-container {
-  max-width: 240px;
-  max-height: 240px;
+  max-width: 300px;
+  max-height: 300px;
+  margin-top: 20px;
 }
 .image-container img {
   width: 100%;
@@ -116,6 +117,15 @@ export default {
   .heading {
     font-weight: bold;
     font-size: 14px;
+  }
+}
+.description {
+  font-size: 14px;
+  line-height: 20px;
+  color: #535353;
+  span {
+    font-size: 16px !important;
+    color: #000;
   }
 }
 .addToCart {

@@ -86,7 +86,7 @@ export default {
   },
   methods: {
     placeOrder: function () {
-      console.log("this is place");
+      this.$store.dispatch("popupRequest", true);
     },
   },
   computed: {

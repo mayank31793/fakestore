@@ -5,9 +5,12 @@ export default createStore({
     productListInCart:[],
     userEmail: null,
     products:[],
+    showPopUp:false
   },
   getters:{
     userEmail: (state) => state.userEmail,
+
+    showPopUp: (state) => state.showPopUp,
   },
   mutations: {
     ADD_PRODUCT(state,data)  {
@@ -27,6 +30,9 @@ export default createStore({
     },
     CALL_ALL_PRODUCTS(state,data){
       state.products = JSON.parse(JSON.stringify(data));
+    },
+    POPUP_REQUEST:function(state,data){
+      state.showPopUp = data
     }
   },
   actions: {
@@ -47,6 +53,9 @@ export default createStore({
     },
     callAllProducts:function(context,payload){
       context.commit('CALL_ALL_PRODUCTS',payload);
+    },
+    popupRequest:function(context,payload){
+      context.commit('POPUP_REQUEST',payload);
     }
   },
   modules: {
